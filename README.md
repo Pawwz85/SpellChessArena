@@ -3,19 +3,11 @@
 SpellChessArena is a Qt-based desktop application and the dedicated GUI for [icecream](https://github.com/Pawwz85/icecream), the SpellChess engine. It provides a graphical workspace for viewing, editing, analysing, and playing SpellChess games.
 
 ## Features
-
-- Interactive SpellChess board with drag-and-drop piece movement.
-- Spell-aware game documents and move construction.
-- Spell controls and counters, including active and inactive spell artwork.
-- Import or paste positions using FEN.
-- Import or paste games using PGN4.
-- Move list and game/document viewing workflows.
-- Game running and session support with player timers.
-- Engine integration through UCI for running engines and engine analysis.
-- Analysis tools including principal variations, evaluation display, and engine logging.
-- Board validation/linting support.
-- Promotion selection overlay and other board interaction helpers.
-- Bundled chess-piece and spell-icon assets.
+- Play spell chess against engine
+- Import games from chess.com by pasting PGN4
+- Game review
+- Live engine analisis
+- Analysis tools including principal variations and eval bar
 
 ## Requirements
 
