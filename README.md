@@ -3,11 +3,47 @@
 SpellChessArena is a Qt-based desktop application and the dedicated GUI for [icecream](https://github.com/Pawwz85/icecream), the SpellChess engine. It provides a graphical workspace for viewing, editing, analysing, and playing SpellChess games.
 
 ## Features
-- Play spell chess against engine
-- Import games from chess.com by pasting PGN4
-- Game review
-- Live engine analisis
-- Analysis tools including principal variations and eval bar
+- **Engine games:** play SpellChess against a human, a configured engine or setup a game between 2 engines
+- **Live analysis:** continuously analize the current board or document position with a selected engine while you browse or edit it.
+- **Game and document annotation:** analyze an existing game or document once, using fixed-depth or fixed-time analysis, and copy the resulting PGN or PGN4 to the clipboard.
+- **Principal variations and evaluation tools:** add panels for principal variations, engine logs, engine controls, and the evaluation thermometer from the Views menu.
+- Import games from chess.com by pasting PGN4.
+
+## Application usage
+
+### Configure engines
+
+1. Open **Settings → Manage engines**.
+2. Add an engine executable. The application probes it through UCI before accepting it.
+3. In the engine list, use the available actions to edit or remove an engine, or move it up and down to reorder the configured list.
+
+Engine entries are persisted through Qt application settings, so they remain available the next time the application starts. The picker targets executable files; on Windows, this generally means selecting an `.exe` file. Engines must support the expected UCI protocol, including responding to the initial `uci` probe with `uciok`. SpellChess-compatible engines, particularly [icecream](https://github.com/Pawwz85/icecream), are recommended.
+
+### Start an engine game
+
+1. Open **Game → New game**.
+2. For White and Black, choose **Human** or **Engine**. When using an engine player, select one of the engines configured above.
+3. Configure each side's time control. You can use infinite time or a simple clock with an initial time, increment, and margin.
+4. Set optional engine limits: move time, nodes searched, and maximum depth. You can also enable pondering so the engine thinks during the opponent's turn.
+5. Set the starting FEN if the game should begin from a position other than the default, and optionally select a `.spell` opening book.
+6. Accept the dialog to start the game.
+
+### Enable live analysis
+
+First configure at least one engine. Then open **Settings → Select live analysis engine** and choose the engine to use. Live analysis is continuous: it follows the current board or document position as you navigate through moves or change the position, rather than annotating the whole document once. The engine's output can be viewed by adding analysis-related panels from **Views**, such as **Principal Variations**, **Engine Logs**, **Engine Control Panel**, or **Eval Thermomether**.
+
+### Annotate a game or document
+
+1. Open a document or import one with **Game → Load PGN4**. A position can also be loaded with **Game → Load FEN**.
+2. Choose **Game → Analise game** (the menu keeps this existing spelling).
+3. Select the configured engine and choose either fixed-depth analysis or fixed-time analysis per position.
+4. Optionally enable recursive analysis to include variations as well as the main line.
+5. Accept the configuration and wait for the progress indicator to finish.
+6. Use **Game → Copy PGN** or **Game → Copy PGN4** to copy the annotated document to the clipboard. The appropriate action is selected for the current document type.
+
+This one-time document annotation workflow is separate from live analysis. PGN and PGN4 clipboard export is the verified way to retain or share the annotated result; no separate document-save workflow is assumed.
+
+PGN4 is the chess.com's game/document format used for importing SpellChess games, while application specific FEN string extension is used to load a starting position into a new document. Optional analysis panels can be added or rearranged from the **Views** menu when more detailed engine output is needed.
 
 ## Requirements
 
