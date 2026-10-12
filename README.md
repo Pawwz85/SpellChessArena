@@ -82,6 +82,32 @@ cmake --install build --config Release --prefix install
 
 The install tree contains the `SpellChessArena` executable and the bundled `assets/` directory.
 
+### Packaging a Windows release
+
+The project uses CPack to produce a ZIP archive and a Windows Installer (`.msi`).
+On Windows, configure with a Visual Studio generator and build the `PACKAGE`
+target, or run CPack directly after building:
+
+```text
+cmake -S . -B build -G "Visual Studio 17 2022" -A x64
+cmake --build build --config Release
+cpack --config build/CPackConfig.cmake -C Release -G WIX
+```
+
+The Windows application uses the statically linked MSVC runtime (`/MT`) and
+the generated installer includes Qt's deployed runtime files and the bundled
+assets. The GitHub Actions release workflow runs this packaging step for tags
+matching `vMAJOR.MINOR.PATCH` and publishes the Windows `.msi` installer and ZIP archive,
+as well as a Linux `.tar.gz` binary package.
+
+The Linux package can be generated locally with:
+
+```text
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build --config Release
+cpack --config build/CPackConfig.cmake -C Release -G TGZ
+```
+
 ### Qt discovery
 
 If CMake cannot find Qt 6 automatically, provide the Qt installation path when configuring. For example, with a Qt installation that contains `lib/cmake/Qt6`:
