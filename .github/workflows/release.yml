@@ -34,10 +34,6 @@ jobs:
             throw "Release tags must match vMAJOR.MINOR.PATCH"
           }
 
-      - name: Install WiX Toolset
-        shell: pwsh
-        run: choco install wixtoolset --version=3.14.1 --no-progress --yes
-
       - name: Configure
         shell: pwsh
         env:
