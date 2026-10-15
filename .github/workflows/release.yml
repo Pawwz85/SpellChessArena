@@ -34,6 +34,10 @@ jobs:
             throw "Release tags must match vMAJOR.MINOR.PATCH"
           }
 
+      - name: Install WiX Toolset
+        shell: pwsh
+        run: choco install wixtoolset --version=3.14.1 --no-progress --yes
+
       - name: Configure
         shell: pwsh
         env:
@@ -41,7 +45,8 @@ jobs:
         run: |
           $version = $env:RELEASE_TAG -replace '^v', ''
           cmake -S . -B build -G "Visual Studio 17 2022" -A x64 `
-            -DCPACK_PACKAGE_VERSION=$version
+            -DCPACK_PACKAGE_VERSION=$version `
+            -DCMAKE_PREFIX_PATH="$env:QT_ROOT_DIR"
 
       - name: Build
         run: cmake --build build --config Release --parallel
@@ -98,7 +103,8 @@ jobs:
         run: |
           version="${RELEASE_TAG#v}"
           cmake -S . -B build -DCMAKE_BUILD_TYPE=Release \
-            -DCPACK_PACKAGE_VERSION="$version"
+            -DCPACK_PACKAGE_VERSION="$version" \
+            -DCMAKE_PREFIX_PATH="$QT_ROOT_DIR"
 
       - name: Build
         run: cmake --build build --config Release --parallel
