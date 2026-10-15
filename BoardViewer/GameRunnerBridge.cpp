@@ -1,8 +1,8 @@
 #include <GameRunnerBridge.hpp>
 #include <QObject>
 
-#include <Spellchess/GameMonitor.h>
-#include <Spellchess/Observer.h>
+#include <SpellChess/GameMonitor.h>
+#include <SpellChess/Observer.h>
 
 
 BoardViewer::Internal::GameRunnerEvents::GameRunnerEvents(): 

@@ -84,7 +84,7 @@ void PlayerTimer::setState(const SpellChessLib::PlayerTimerState & newState) {
 
 void PlayerTimer::onTick() {
     if(state.running) {
-        long long newValue = std::max(0LL, state.timeLeft.count() - 10); 
+        long long newValue = std::max(0LL, (long long)(state.timeLeft.count() - 10)); 
         state.timeLeft = std::chrono::milliseconds(newValue);
         content->setText(formatTime());
         update(); 
