@@ -5,7 +5,7 @@ project(SpellChessArena VERSION 1.0.0 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-option (ENABLE_IWYU "Enable include-what-you-use" ON)
+option (ENABLE_IWYU "Enable include-what-you-use" OFF)
 
 
 # Keep the compiler runtime self-contained in distributed Windows builds. Qt is
