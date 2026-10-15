@@ -36,7 +36,7 @@ include(FetchContent)
 
 FetchContent_Declare(
     SpellChessLib
-    URL https://github.com/Pawwz85/SpellChessLib/archive/refs/tags/v1.0.4.tar.gz
+    URL https://github.com/Pawwz85/SpellChessLib/archive/refs/tags/v1.0.3.tar.gz
 )
 
 FetchContent_MakeAvailable(SpellChessLib)
@@ -106,6 +106,10 @@ set(CPACK_PACKAGE_VENDOR "Pawwz")
 set(CPACK_PACKAGE_INSTALL_DIRECTORY "SpellChessArena")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "SpellChess desktop application")
 set(CPACK_PACKAGE_CONTACT "SpellChessArena maintainers")
+
+if(WIN32 AND DEFINED ENV{WIX})
+    file(TO_CMAKE_PATH "$ENV{WIX}" CPACK_WIX_ROOT)
+endif()
 
 # Keep this GUID unchanged so newer MSI packages upgrade older installations.
 set(CPACK_WIX_UPGRADE_GUID "76bf2a1b-50f2-430e-b6b7-b4b9bd3cf5bc")
