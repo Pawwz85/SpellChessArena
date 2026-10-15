@@ -68,12 +68,31 @@ jobs:
 
       - name: Create CPack packages
         working-directory: build
+        id: cpack
+        continue-on-error: true
         run: |
           cpack --verbose --config CPackConfig.cmake -C Release -G WIX
           cpack --config CPackConfig.cmake -C Release -G ZIP
           if (-not (Get-ChildItem -Filter *.msi -File)) {
             throw "CPack WIX completed without producing an MSI"
           }
+
+      - name: Show WiX log
+        if: steps.cpack.outcome == 'failure'
+        working-directory: build
+        shell: pwsh
+        run: |
+          $log = Get-ChildItem -Path _CPack_Packages -Filter wix.log -Recurse -File -ErrorAction SilentlyContinue |
+            Select-Object -First 1
+          if ($log) {
+            Get-Content -LiteralPath $log.FullName
+          } else {
+            Write-Host "No wix.log was generated"
+          }
+
+      - name: Fail if CPack failed
+        if: steps.cpack.outcome == 'failure'
+        run: exit 1
 
       - name: Upload package artifacts
         uses: actions/upload-artifact@v4

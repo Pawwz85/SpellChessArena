@@ -106,6 +106,9 @@ set(CPACK_PACKAGE_VENDOR "Pawwz")
 set(CPACK_PACKAGE_INSTALL_DIRECTORY "SpellChessArena")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "SpellChess desktop application")
 set(CPACK_PACKAGE_CONTACT "SpellChessArena maintainers")
+# FetchContent dependencies may define development install components. They are
+# not part of the distributable application and can create invalid MSI input.
+set(CPACK_COMPONENTS_ALL Unspecified)
 
 if(WIN32 AND DEFINED ENV{WIX})
     file(TO_CMAKE_PATH "$ENV{WIX}" CPACK_WIX_ROOT)
