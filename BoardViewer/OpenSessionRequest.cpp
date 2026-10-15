@@ -1,6 +1,10 @@
 #include <OpenSessionRequest.hpp>
 #include <QString>
-#include <stdexcept>
+
+#include <SpellChess/GameRunnerConfiguration.h>
+#include <SpellChess/PlayerEntry.h>
+
+namespace SpellChessLib { class OpeningBook; }
 
 std::shared_ptr<BoardViewer::PlayerDefinition> BoardViewer::defaultHumanPlayerDef =
     std::make_shared<BoardViewer::HumanPlayerDefinition>();

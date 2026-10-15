@@ -2,13 +2,13 @@
 
 #include <QEvent>
 #include <QCoreApplication>
-#include <QObject>
 #include <QPointer>
 #include <QTimer>
+
 #include <SpellChess/GameMonitor.h>
 #include <SpellChess/Observer.h>
-#include <SpellChess/Player.h>
-#include <SpellChess/GameAnnotations.h>
+#include <SpellChess/Board.h>
+#include <SpellChess/SpellChessGame.h>
 
 #include <algorithm>
 #include <chrono>
@@ -18,6 +18,8 @@
 #include <type_traits>
 #include <vector>
 #include <future>
+
+class QObject;
 
 namespace BoardViewer {
 

@@ -1,5 +1,12 @@
 #include <EngineControlPanel.hpp>
+#include <RunningEnginesService.hpp>
+#include <UCILoader/EngineConnection.h>
+#include <UCILoader/UCI.h>
 #include <map>
+#include <functional>
+#include <memory>
+#include <type_traits>
+#include <vector>
 #include <QVBoxLayout>
 #include <QCheckBox>
 #include <QSpinBox>
@@ -7,6 +14,10 @@
 #include <QLineEdit>
 #include <QPushButton>
 #include <QLabel>
+#include <QDebug>
+#include <QLayout>
+#include <QPointer>
+#include <QTypeInfo>
 
 void EngineControlPanel::disconnectEngine() {
     delete layout();

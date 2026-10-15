@@ -4,15 +4,17 @@
 #include <functional>
 #include <mutex>
 #include <cstdint>
+#include <string>
 
+#include <SpellChess/Board.h>
 #include <SpellChess/SpellChessDocument.h>
 #include <SpellChess/SpellChessGame.h> // for TimerPairState
 #include <SpellChess/DocumentAnnotator.h> 
 
 #include <QObject>
+#include <QStringLiteral>
 #include <QString>
 
-#include "SpellChessMoveBuilder.hpp"
 
 namespace BoardViewer {
 

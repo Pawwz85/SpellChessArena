@@ -1,16 +1,28 @@
 #pragma once
 
 #include "GameRunnerBridge.hpp"
-#include "OpenSessionRequest.hpp"
 #include "BoardViewerModel.hpp"
 
+#include <SpellChess/Board.h>
+#include <SpellChess/Player.h>
+#include <SpellChess/Scheduler/ObjectAllocator.h> // for ResourcePointer
+#include <SpellChess/SpellChessDocument.h>
+#include <SpellChess/TimerService.h>
 #include <SpellChess/AsynchronousPlayer.h>
-#include <SpellChess/GameRunner.h>
 
-#include <QCoreApplication> 
 #include <QString>
 
+#include <memory>
+#include <thread>
+
+class QCoreApplication;
+
+namespace SpellChessLib { class GameRunner; }
+
 namespace BoardViewer {
+
+    class OpenSessionRequest;
+    class PlayerDefinition;
 
     class GameViewerModel : public Model  {
         using PlayerPointer = typename SpellChessLib::Scheduler::ResourcePointer<SpellChessLib::Player>;

@@ -2,6 +2,12 @@
 
 #include "BoardViewerModel.hpp"
 
+#include <SpellChess/SpellChessDocument.h>
+
+#include <memory>
+
+class QObject;
+
 namespace BoardViewer {
     class DocumentViewerModel : public Model {
         void handleMakeMove(SpellChessLib::SpellChessMove move) override;

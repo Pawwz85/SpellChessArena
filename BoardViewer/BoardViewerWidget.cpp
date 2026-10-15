@@ -2,14 +2,18 @@
 #include <BoardLinter.hpp>
 #include <SingleItemSquareLayout.hpp>
 #include <BoardGrid/EntityInitializers.hpp>
+#include <BoardGrid/PromotionContextMenuOverlay.hpp>
 #include <SpellChess/Board.h>
 #include <SpellChess/MoveLegality.h>
+#include <SpellChess/MoveGen.h>
 
 #include <QGridLayout>
 #include <QHBoxLayout>
 
 #include <map>
+#include <memory>
 #include <QKeyEvent>
+
 class BoardViewer::BoardViewerWidget::NoFocus : public BoardViewer::UserInteractionState {
     BoardViewerWidget * widget;
 

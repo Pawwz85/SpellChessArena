@@ -1,4 +1,5 @@
 #include <SpellCounterWidget.h>
+#include <QIcon>
 
 using namespace SpellCounter;
 

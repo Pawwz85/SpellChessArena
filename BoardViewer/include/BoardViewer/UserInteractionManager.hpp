@@ -1,11 +1,14 @@
 #pragma once
 
 #include <SpellChess/Board.h>
-#include <SpellChess/SpellChessGame.h>
-#include <BoardGrid/BoardGridWidget.h>
 #include <memory>
 #include <optional>
 #include <functional>
+
+namespace Board { 
+    class BoardWidget;
+    template <class Context> class DragHandle;
+}
 
 namespace BoardViewer {
 

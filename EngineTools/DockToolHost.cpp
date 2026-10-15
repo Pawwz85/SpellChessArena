@@ -1,6 +1,5 @@
 #include <DockToolHost.hpp>
-
-#include <QCloseEvent>
+#include <QStringLiteral>
 
 DockToolHost::DockToolHost(EngineTools::ToolTypeId type, EngineTools::EngineRole role, const QString &title, QWidget *parent)
     : QDockWidget(title, parent), instanceKey{type, role} {

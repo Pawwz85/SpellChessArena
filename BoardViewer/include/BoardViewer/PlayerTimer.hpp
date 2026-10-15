@@ -2,8 +2,11 @@
 
 #include <SpellChess/TimerService.h>
 #include <QWidget>
-#include <QLabel>
-#include <QTimer>
+#include <QString>
+#include <cstddef>
+
+class QLabel;
+class QTimer;
 
 namespace BoardViewer {
     class PlayerTimer : public QWidget {

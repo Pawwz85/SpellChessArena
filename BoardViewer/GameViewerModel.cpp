@@ -1,11 +1,22 @@
 #include <GameViewerModel.hpp>
+#include <OpenSessionRequest.hpp>
 
 #include <SpellChess/PlayerRegistry.h>
-#include <SpellChess/MoveGen.h>
 #include <SpellChess/OpeningBookPlayerWrapper.h>
+#include <SpellChess/AsynchronousPlayer.h>
+#include <SpellChess/GameRunner.h>
+#include <SpellChess/PlayerEntry.h>
+#include <SpellChess/SpellChessGame.h>
 
 #include <EngineTools/RunningEnginesService.hpp>
 #include <EngineTools/EngineRolesService.hpp>
+
+#include <QObject>
+
+#include <optional>
+#include <utility>
+
+class QCoreApplication;
 
 BoardViewer::GameViewerModel::GameViewerModel(std::shared_ptr<SpellChessLib::TimerService> timeServ, const OpenSessionRequest &request, QCoreApplication *app) : runnerAdapter(app, this),
                                                                                                                                                                  application(app),

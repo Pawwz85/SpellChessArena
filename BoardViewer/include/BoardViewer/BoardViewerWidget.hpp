@@ -6,6 +6,7 @@
 #include <QLabel>
 
 #include <BoardGrid/BoardGridWidget.h>
+#include <BoardGrid/BoardTypes.hpp>
 
 #include "BoardViewerModel.hpp"
 #include "UserInteractionManager.hpp"

@@ -3,8 +3,14 @@
 #include <QGuiApplication>
 #include <SpellChess/PGNExporter.h>
 #include <SpellChess/PGN4Exporter.h>
+#include <SpellChess/DocumentAnnotator.h>
+#include <SpellChess/SpellChessDocument.h>
+#include <SpellChess/SpellChessGame.h>
+#include <SpellChess/TimerService.h>
 #include <sstream>
 #include <thread>
+#include <cassert>
+#include <chrono>
 
 BoardViewer::Model::Model(QObject * parent) : QObject(parent){
     timers.whiteTimer.running = timers.blackTimer.running = false;

@@ -1,5 +1,13 @@
 #include <EntityInitializers.hpp>
 #include <PieceSpriteSet.hpp>
+#include <BoardEntity.h>
+
+#include <map>
+
+#include <QPointF>
+#include <QSizeF>
+#include <QString>
+#include <QVariant>
 
 void Board::EntityInitializers::initPiece(Board::BoardEntity & entity, PieceColor color, PieceType type){
     static const std::map<Board::PieceType, const char *>  pieceTypeToId = {

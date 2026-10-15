@@ -1,19 +1,24 @@
 #pragma once
 
-
+#include <cstddef>
+#include <string>
+#include <vector>
 #include <memory>
 #include <QWidget>
-#include <QLabel>
 #include <QColor>
-#include <QLineEdit>
 
-#include <SpellChess/SpellChessUciLoaderPort.h>
 #include <SpellChess/Board.h>
 
 #include "EngineTool.hpp"
-#include "RunningEnginesService.hpp"
 #include "EngineRolesService.hpp"
 
+class QLabel;
+class QLineEdit;
+
+namespace UCILoader { 
+    class EventReceiver;
+    class UciScore;
+}
 
 class VariationLineWidget : public QWidget {
     Q_OBJECT

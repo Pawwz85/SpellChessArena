@@ -1,10 +1,14 @@
 #pragma once
 #include <QObject>
-#include <QPixmap>
+#include <QString>
+#include <QUrl>
 #include "SpriteSetScheme.hpp"
-#include <memory> // for shared_ptr 
 #include <vector>
+#include <cstddef>
+#include <string>
 #include <stdexcept>
+
+class QPixmap;
 
 namespace SpriteSet
 {

@@ -1,6 +1,11 @@
 #pragma once
 
 #include <QLayout>
+#include <QObject>
+#include <QSize>
+
+class QLayoutItem;
+class QWidget;
 
 namespace BoardViewer {
     class SingleItemSquareLayout : public QLayout {

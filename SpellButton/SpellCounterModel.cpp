@@ -1,5 +1,6 @@
 #include <SpellCounterModel.h>
-#include <cstring>
+#include <QString>
+
 using namespace SpellCounter;
 
 SpellCounter::Config SpellCounter::makeDefaultSpellCounterConfig() {

@@ -2,11 +2,16 @@
 
 #include <SpellChess/SpellChessDocument.h>
 #include <SpellChess/SpellChessDocumentHTMLRenderer.h>
-#include <QObject>
 #include <QWidget>
-#include <QTextDocument>
-#include <QTextBrowser>
-#include <QLayout>
+#include <QString>
+
+#include <memory>
+
+class QLayout;
+class QTextBrowser;
+class QTextDocument;
+class QTextEdit;
+class QUrl;
 
 namespace BoardViewer {
 

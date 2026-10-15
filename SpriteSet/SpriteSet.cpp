@@ -1,5 +1,5 @@
 #include <SpriteSet.hpp>
-#include <QFile>
+#include <QPixmap>
 
 void SpriteSet::SpriteSet::deleteAllSprites(){
     for (auto & ptr : sprites)

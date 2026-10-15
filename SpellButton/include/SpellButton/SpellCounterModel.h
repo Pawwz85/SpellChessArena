@@ -1,7 +1,8 @@
 #pragma once
 #include <QObject>
-#include <QPixmap>
 #include <QString>
+
+class QPixmap;
 
 namespace SpellCounter {
 

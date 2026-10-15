@@ -2,6 +2,7 @@
 
 #include <SpellChess/Board.h>
 #include <SpriteSet/SpriteSet.hpp>
+#include <SpriteSet/SpriteSetScheme.hpp>
 
 #include <Misc/Singleton.h>
 
@@ -9,12 +10,12 @@
 
 #include <QObject>
 #include <QWidget>
-#include <QPushButton>
-#include <QProgressBar>
+#include <QString>
 #include <QColor>
 
-#include <QGridLayout>
-#include <QHBoxLayout>
+
+class QLayout;
+class QPushButton;
 
 namespace BoardViewer {
     class SpellPanelModel : public QObject{

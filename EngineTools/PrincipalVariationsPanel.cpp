@@ -1,12 +1,20 @@
 #include <PrincipalVariationsPanel.hpp>
+#include <RunningEnginesService.hpp>
 
 #include <QHBoxLayout>
-#include <QVBoxLayout>
 #include <QPointer>
+#include <QFrame>
+#include <QLabel>
+#include <QLineEdit>
+#include <QString>
 #include <SpellChess/MoveNotation.h>
 #include <SpellChess/Board.h>
 #include <SpellChess/UCIHelpers.h>
+#include <UCILoader/EngineConnection.h>
+#include <UCILoader/EngineEvent.h>
+#include <UCILoader/UCI.h>
 #include <cmath> // for abs
+#include <type_traits>
 
 const QString evaluationLabelStylesheet = QString() +
                                    "background-color: %1; color: %2;" +

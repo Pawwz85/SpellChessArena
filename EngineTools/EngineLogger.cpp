@@ -1,6 +1,12 @@
 #include <EngineLogger.hpp>
+#include <RunningEnginesService.hpp>
 #include <QVBoxLayout>
-#include <QScrollBar>
+#include <QChar>
+#include <QPointer>
+#include <QTextEdit>
+#include <memory>
+#include <optional>
+#include <type_traits>
 
 void EngineLogsWidget::disconnectEngine() {
     auto entry = RunningEnginesService::getInstance().getById(engineId);

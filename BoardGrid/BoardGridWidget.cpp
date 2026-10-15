@@ -3,13 +3,21 @@
 #include <QPainter>
 #include <QPainterPath>
 #include <QPen>
-#include <map>
+#include <QBrush>
+#include <QPoint>
+#include <QPointF>
+#include <QRgb>
+#include <QSizePolicy>
+#include <QVariant>
 #include <vector>
 #include <mutex>
+#include <cmath>
+#include <cstdint>
+#include <utility>
 #include <algorithm>
-#include <PieceSpriteSet.hpp>
-#include <SpellChess/Board.h> // For SpellChessLib::NoSquare
+#include <PromotionContextMenuOverlay.hpp>
 
+class QPixmap;
 using namespace Board;
 
 BoardGridWidget::BoardGridWidget(QWidget * parent): QWidget(parent) {

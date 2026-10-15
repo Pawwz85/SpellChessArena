@@ -1,4 +1,5 @@
 #include <SpellChessMoveBuilder.hpp>
+#include <SpellChess/Board.h>
 
 BoardViewer::SpellChessMoveBuilder::SpellChessMoveBuilder() {
     reset();

@@ -1,9 +1,10 @@
 #pragma once
 
-#include <BoardGrid/BoardGridModel.h>
-#include <SpellChess/SpellChessGame.h>
-#include <array>
+#include <SpellChess/Board.h>
 #include <optional>
+#include <cstdint>
+
+namespace Board { class BoardGridModel; }
 
 namespace BoardViewer {
 

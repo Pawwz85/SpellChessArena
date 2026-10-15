@@ -1,7 +1,6 @@
 #pragma once
 
 #include <QObject>
-#include <QPointF>
 #include "CoordinateSystem.h"
 
 namespace Board {

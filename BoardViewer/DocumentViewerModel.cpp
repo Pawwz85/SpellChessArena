@@ -1,4 +1,14 @@
 #include <DocumentViewerModel.hpp>
+#include <QString>
+#include <QStringLiteral>
+
+#include <optional>
+#include <string>
+
+#include <SpellChess/Board.h> // for SpellChessMove
+
+class QObject;
+
 
 BoardViewer::DocumentViewerModel::DocumentViewerModel(std::shared_ptr<SpellChessLib::SpellChessDocument> document, QObject * parent) : BoardViewer::Model(parent) {
     this->document = document;

@@ -1,5 +1,6 @@
 #include <SpriteSetScheme.hpp>
 #include <algorithm>
+#include <cstddef>
 
 class SchemeComparator {
     public:

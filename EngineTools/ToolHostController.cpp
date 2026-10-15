@@ -3,11 +3,22 @@
 #include <PrincipalVariationsPanel.hpp>
 
 #include <QSettings>
-#include <QSignalBlocker>
 #include <QTimer>
+#include <QByteArray>
+#include <QList>
+#include <QMainWindow>
+#include <QString>
+#include <QStringLiteral>
+#include <QVariant>
+#include <QWidget>
 
 #include <set>
 #include <vector>
+#include <optional>
+#include <utility>
+
+#include <DockToolHost.hpp>
+namespace SpellChessLib { class GameState; }
 
 namespace {
 constexpr int settingsSchemaVersion = 1;

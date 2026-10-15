@@ -1,4 +1,8 @@
 #include <BoardEntity.h>
+#include <QByteArray>
+#include <SpriteSet/SpriteSet.hpp>
+
+class QPixmap;
 
 using namespace Board;
 

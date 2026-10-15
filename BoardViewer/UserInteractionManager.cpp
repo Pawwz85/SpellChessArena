@@ -1,4 +1,11 @@
 #include <UserInteractionManager.hpp>
+#include <SpellChess/Board.h>
+#include <utility>
+
+namespace Board {
+    class BoardWidget;
+    template <class Context> class DragHandle;
+}
 
 using namespace BoardViewer;
 

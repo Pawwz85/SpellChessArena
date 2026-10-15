@@ -1,15 +1,17 @@
 #pragma once
 
 #include <map>
-#include <memory>
+#include <type_traits>
 
 #include <QObject>
-#include <QMainWindow>
 #include <QPointer>
 
-#include <SpellChess/Board.h>
+#include "EmbeddedToolRegistry.hpp"
+#include "EngineRolesService.hpp"
 
-#include "DockToolHost.hpp"
+class DockToolHost;
+class QMainWindow;
+namespace SpellChessLib { class GameState; }
 
 class ToolHostController : public QObject {
     Q_OBJECT

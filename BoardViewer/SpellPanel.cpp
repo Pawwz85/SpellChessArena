@@ -2,7 +2,18 @@
 #include <QVBoxLayout>
 
 #include <QPainter>
-#include <QBrush>
+#include <QChar>
+#include <QLayout>
+#include <QMargins>
+#include <QPushButton>
+#include <QRect>
+#include <QUrl>
+
+#include <cstddef>
+#include <vector>
+
+#include <SpellChess/Board.h>
+#include <SpriteSet/SpriteSet.hpp>
 
 using namespace BoardViewer;
 

@@ -1,7 +1,15 @@
 #include <PlayerTimer.hpp>
 #include <QTime>
-#include <ctime>
 #include <QHBoxLayout>
+#include <QChar>
+#include <QLabel>
+#include <QTimer>
+
+#include <algorithm> // for max
+#include <chrono>
+
+#include <SpellChess/TimerService.h>
+
 
 using namespace BoardViewer;
 

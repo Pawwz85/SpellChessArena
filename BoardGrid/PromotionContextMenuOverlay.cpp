@@ -1,6 +1,11 @@
 #include <PromotionContextMenuOverlay.hpp>
+#include <SpriteSet/SpriteSet.hpp>
 #include <PieceSpriteSet.hpp>
 #include <QDebug>
+#include <QColor>
+#include <QRgb>
+#include <QString>
+#include <QPainter>
 #include <map>
 
 void Board::PromotionContextMenuOverlay::setStyle(const PromotionContextMenuStyle * style) {

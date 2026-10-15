@@ -5,6 +5,8 @@
 #include <PrincipalVariationsPanel.hpp>
 #include <EvalThermometer.hpp>
 
+#include <QStringLiteral>
+
 namespace EngineTools {
 
 const std::vector<ToolDescriptor> &toolDescriptors() {

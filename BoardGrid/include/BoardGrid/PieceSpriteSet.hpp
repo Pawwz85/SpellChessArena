@@ -1,7 +1,9 @@
 #pragma once
 
 #include <SpriteSet/SpriteSet.hpp>
+#include <SpriteSet/SpriteSetScheme.hpp>
 #include <Misc/Singleton.h>
+#include <QString>
 
 namespace Board {
 

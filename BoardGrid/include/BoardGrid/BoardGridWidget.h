@@ -3,15 +3,16 @@
 #include <QColor>
 #include <vector>
 #include <memory>
-#include <functional>
-#include <QPainter>
+#include <QRect>
+#include "CoordinateSystem.h"
 #include "BoardGridModel.h"
 #include "BoardEntity.h"
 #include "DragArea.hpp"
 #include "MouseDragDetector.hpp"
-#include "PromotionContextMenuOverlay.hpp"
+class QPainter;
 
 namespace Board {
+    class PromotionContextMenuOverlay;
 
     class BoardGridWidget : public QWidget {
         Q_OBJECT

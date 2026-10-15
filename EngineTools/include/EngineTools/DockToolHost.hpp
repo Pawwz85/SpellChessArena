@@ -1,9 +1,11 @@
 #pragma once
 
 #include <QDockWidget>
-
+#include <QString>
+class QWidget;
 #include "EngineRolesService.hpp"
 #include "EmbeddedToolRegistry.hpp"
+
 
 class DockToolHost : public QDockWidget {
     Q_OBJECT

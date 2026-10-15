@@ -3,13 +3,14 @@
 #include "CoordinateSystem.h"
 
 #include <QObject>
-#include <QPainter>
 #include <QRectF>
 
 #include <array>
 #include <optional>
 
-    namespace Board {
+class QPainter;
+
+namespace Board {
     
     /*!
         PromotionContextMenuStyle class is responsible for defining how promotion context menu overlay is being drawn.

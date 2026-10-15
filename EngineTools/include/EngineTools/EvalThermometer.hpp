@@ -1,16 +1,20 @@
 #pragma once
 
 #include <memory>
-#include <mutex>
 
 #include <QWidget>
+#include <QString>
+#include <QStringLiteral>
 
 #include <SpellChess/Board.h>
-#include <SpellChess/SpellChessUciLoaderPort.h>
 
-#include "RunningEnginesService.hpp"
+#include <UCILoader/UCI.h>
+
 #include "EngineRolesService.hpp"
 #include "EngineTool.hpp"
+
+namespace UCILoader { class EventReceiver; }
+
 
 class EvalThermometer : public QWidget, public EngineTools::EngineTool {
     Q_OBJECT

@@ -1,13 +1,10 @@
 #pragma once
 
-#include <memory>
 #include <QWidget>
-
-#include <SpellChess/SpellChessUciLoaderPort.h>
-
 #include "EngineTool.hpp"
-#include "RunningEnginesService.hpp"
 #include "EngineRolesService.hpp"
+
+namespace UCILoader { class EngineOptionProxy; }
 
 class EngineControlPanel : public QWidget, public EngineTools::EngineTool {
     

@@ -1,6 +1,8 @@
 #pragma once
-#include "SpellCounterWidget.h" 
+#include "SpellCounterWidget.h"
+#include "SpellCounterModel.h" 
 #include <QHBoxLayout>
+#include <QWidget>
 
 namespace SpellCounter {
 

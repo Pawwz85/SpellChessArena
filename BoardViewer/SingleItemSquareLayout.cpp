@@ -1,5 +1,14 @@
 #include <SingleItemSquareLayout.hpp>
 
+#include <QLayoutItem>
+#include <QMargins>
+#include <QRect>
+
+#include <algorithm>
+#include <cmath>
+
+class QWidget;
+
 using namespace BoardViewer;
 
 void SingleItemSquareLayout::setItem(QLayoutItem * newItem) {

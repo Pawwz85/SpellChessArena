@@ -1,12 +1,16 @@
 #include <MoveList.hpp>
 #include <string>
+#include <cstddef>
 #include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QScrollBar>
 #include <QIcon>
 #include <QToolButton>
 #include <QToolBar>
 #include <QLabel>
+#include <QLayout>
+#include <QTextBrowser>
+#include <QTextEdit>
+#include <QUrl>
+#include <SpellChess/SpellChessDocument.h>
 #include <SpellChess/SpellChessDocumentHTMLRenderer.h>
 
 using namespace BoardViewer;

@@ -1,15 +1,28 @@
 #include <EvalThermometer.hpp>
+#include <RunningEnginesService.hpp>
 
 #include <QMetaObject>
 #include <QPainter>
 #include <QPointer>
+#include <QBrush>
+#include <QColor>
+#include <QFlags>
+#include <QFont>
+#include <QPen>
+#include <QRect>
 
 #include <SpellChess/UCIHelpers.h>
+#include <SpellChess/Board.h>
 
+#include <UCILoader/EngineConnection.h>
+#include <UCILoader/EngineEvent.h>
+
+#include <cstdlib>
+#include <type_traits>
+#include <utility>
 #include <algorithm>
 #include <cmath>
-#include <iomanip>
-#include <sstream>
+#include <vector>
 
 namespace {
 

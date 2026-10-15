@@ -7,7 +7,6 @@
 #include <QSize>
 #include <QString>
 
-#include "RunningEnginesService.hpp"
 #include "EngineRolesService.hpp"
 
 class QWidget;

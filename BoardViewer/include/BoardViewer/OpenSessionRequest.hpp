@@ -2,10 +2,8 @@
 #include <memory>
 #include <cstdint>
 #include <QString>
-#include <QCoreApplication>
 #include <SpellChess/GameRunnerConfiguration.h>
 #include <SpellChess/PlayerEntry.h>
-#include <SpellChess/Player.h>
 #include <SpellChess/OpeningBook.h>
 
 namespace BoardViewer {

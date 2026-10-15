@@ -1,16 +1,19 @@
 #pragma once
 #include <QObject>
-#include <QPixmap>
 #include <QSizeF>
 #include <QPointF>
 #include <list>
-#include <chrono>
+#include <memory>
 #include <atomic>
 #include <QPropertyAnimation>
 #include <SpriteSet/SpriteSet.hpp> // for SpriteReference
 #include "CoordinateSystem.h"
 
+class QPixmap;
+
 namespace Board {
+
+    class BoardEntityList;
 
     extern std::atomic<unsigned int> BoardEntityIdentifierSequence;
 

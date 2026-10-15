@@ -1,9 +1,26 @@
 #include <SpellChess/SpellChessUciLoaderPort.h>
 #include <SpellChess/UCIEnginePlayer.h>
-#include <RunningEnginesService.hpp>
-#include <algorithm>
+#include <SpellChess/Factory.h>
 
-#include <QLocale>
+#include <UCILoader/EngineConnection.h>
+#include <UCILoader/Logger.h>
+#include <UCILoader/ProcessWrapper.h>
+
+#include <RunningEnginesService.hpp>
+
+#include <algorithm>
+#include <atomic>
+#include <cstddef>
+#include <memory>
+#include <mutex>
+#include <optional>
+#include <string>
+#include <utility>
+#include <vector>
+
+#include <QString>
+
+namespace SpellChessLib { class Player; }
 
 EngineLogger::EngineLogger(size_t maximumLineCount) : maximumLineCount(maximumLineCount){
 };

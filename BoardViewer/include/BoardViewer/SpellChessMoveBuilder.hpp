@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SpellChess/Board.h>
+#include <cstdint>
 
 namespace BoardViewer {
 

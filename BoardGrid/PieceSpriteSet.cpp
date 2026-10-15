@@ -1,4 +1,7 @@
 #include <PieceSpriteSet.hpp>
+#include <SpriteSet/SpriteSet.hpp>
+#include <QUrl>
+#include <vector>
 
 SpriteSet::SpriteSetScheme Board::makePieceSetSchemeFromFolder(const QString & folderPath) {
     QString prefix = QString("file:") + folderPath + QString("/");

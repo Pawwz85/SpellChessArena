@@ -5,6 +5,9 @@ project(SpellChessArena VERSION 1.0.0 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+option (ENABLE_IWYU "Enable include-what-you-use" ON)
+
+
 # Keep the compiler runtime self-contained in distributed Windows builds. Qt is
 # still deployed beside the executable by Qt's deployment script below.
 if(MSVC)
@@ -12,9 +15,6 @@ if(MSVC)
 elseif(MINGW)
     add_link_options(-static-libgcc -static-libstdc++)
 endif()
-
-set( headears
-)
 
 set ( src_files 
     "src/App.cpp"
@@ -49,6 +49,17 @@ set (all_files
 )
 
 add_compile_definitions(QT_NO_EMIT)
+
+if(ENABLE_IWYU)
+    find_program(IWYU_EXECUTABLE NAMES include-what-you-use)
+    if(NOT IWYU_EXECUTABLE)
+        message(FATAL_ERROR
+            "ENABLE_IWYU is ON, but include-what-you-use was not found.")
+    endif()
+
+    set(CMAKE_CXX_INCLUDE_WHAT_YOU_USE
+        "${IWYU_EXECUTABLE}")
+endif()
 
 add_subdirectory(Misc)
 add_subdirectory(SpriteSet)
@@ -95,6 +106,7 @@ set(CPACK_PACKAGE_VENDOR "Pawwz")
 set(CPACK_PACKAGE_INSTALL_DIRECTORY "SpellChessArena")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "SpellChess desktop application")
 set(CPACK_PACKAGE_CONTACT "SpellChessArena maintainers")
+
 # Keep this GUID unchanged so newer MSI packages upgrade older installations.
 set(CPACK_WIX_UPGRADE_GUID "76bf2a1b-50f2-430e-b6b7-b4b9bd3cf5bc")
 set(CPACK_GENERATOR "WIX;ZIP")

@@ -2,12 +2,12 @@
 
 #include <QString>
 #include <QObject>
-#include <QTextEdit>
-
-#include <vector>
+#include <QWidget>
 
 #include "EngineTool.hpp"
 #include "EngineRolesService.hpp"
+
+class QTextEdit;
 
 class EngineLogsWidget : public QWidget, public EngineTools::EngineTool {
     Q_OBJECT

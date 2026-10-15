@@ -1,5 +1,8 @@
 #include <BoardLinter.hpp>
+#include <BoardGrid/BoardGridModel.h>
 #include <SpellChess/MoveGen.h>
+#include <vector>
+#include <cstddef>
 
 //! checks whatever linter input satisfies spell requirements of given move candidate
 bool isMoveValidGivenLinterInput(const BoardViewer::LinterInput & input, const SpellChessLib::MoveCandidate & move) {

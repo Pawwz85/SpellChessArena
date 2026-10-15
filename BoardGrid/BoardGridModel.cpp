@@ -1,6 +1,7 @@
 #include <BoardGridModel.h>
 #include <QBrush>
 #include <cstring>
+#include <cstddef>
 
 using namespace Board;
 

@@ -1,14 +1,14 @@
 #pragma once
-#include "BoardEntity.h"
 #include "CoordinateSystem.h"
 #include <memory>
-#include <functional>
-#include <list>
-#include <QPointF>
 #include <QPropertyAnimation>
 #include <mutex>
 
+class QObject;
+
 namespace Board {
+
+    class BoardEntity;
 
     namespace Internal {
         struct DragInfo {

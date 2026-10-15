@@ -1,6 +1,7 @@
 #include <DragArea.hpp>
-#include <limits>
-#include <QDebug>
+#include <climits>
+#include <QPointF>
+class QObject;
 
 Board::Internal::MouseFollowAnimation::MouseFollowAnimation(QObject * parent, std::shared_ptr<DragInfo> info) 
     : QPropertyAnimation(parent), info(info) {
