@@ -60,7 +60,7 @@ jobs:
         run: |
           $version = $env:RELEASE_TAG -replace '^v', ''
           cmake -S . -B build -G "Visual Studio 17 2022" -A x64 `
-            -DCPACK_PACKAGE_VERSION=$version `
+            "-DCPACK_PACKAGE_VERSION=$($version)" `
             -DCMAKE_PREFIX_PATH="$env:QT_ROOT_DIR"
 
       - name: Build
