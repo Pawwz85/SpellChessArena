@@ -20,15 +20,6 @@ elseif(MINGW)
     add_link_options(-static-libgcc -static-libstdc++)
 endif()
 
-# SpellChessLib contains UTF-8 move-notation literals. Apply the compiler
-# character-set options before FetchContent creates its targets so the fetched
-# spellchess target is compiled with the same settings.
-if(MSVC)
-    add_compile_options(/utf-8)
-elseif(MINGW OR CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    add_compile_options(-finput-charset=UTF-8 -fexec-charset=UTF-8)
-endif()
-
 set ( src_files 
     "src/App.cpp"
     "src/EmptyBoardWidget.cpp"
@@ -95,12 +86,19 @@ set_target_properties( SpellChessArena PROPERTIES
     WIN32_EXECUTABLE ON
 )
 
+# The application executable is installed at the package root, so Qt runtime
+# libraries must be deployed there rather than under a separate bin directory.
+set(CMAKE_INSTALL_BINDIR ".")
+set(CMAKE_INSTALL_LIBDIR ".")
+set(QT_DEPLOY_BIN_DIR ".")
+set(QT_DEPLOY_LIB_DIR ".")
+
 if(WIN32)
     qt_generate_deploy_app_script(
         TARGET SpellChessArena
         OUTPUT_SCRIPT deploy_script
         NO_TRANSLATIONS
-        DEPLOY_TOOL_OPTIONS "--release"
+        DEPLOY_TOOL_OPTIONS "--release" "--compiler-runtime"
     )
 else()
     qt_generate_deploy_app_script(
