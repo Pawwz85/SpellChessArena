@@ -86,11 +86,20 @@ set_target_properties( SpellChessArena PROPERTIES
     WIN32_EXECUTABLE ON
 )
 
-qt_generate_deploy_app_script(
-    TARGET SpellChessArena
-    OUTPUT_SCRIPT deploy_script
-    NO_TRANSLATIONS
-)
+if(WIN32)
+    qt_generate_deploy_app_script(
+        TARGET SpellChessArena
+        OUTPUT_SCRIPT deploy_script
+        NO_TRANSLATIONS
+        DEPLOY_TOOL_OPTIONS "--release"
+    )
+else()
+    qt_generate_deploy_app_script(
+        TARGET SpellChessArena
+        OUTPUT_SCRIPT deploy_script
+        NO_TRANSLATIONS
+    )
+endif()
 
 install(TARGETS SpellChessArena
     RUNTIME DESTINATION .
