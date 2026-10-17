@@ -20,6 +20,15 @@ elseif(MINGW)
     add_link_options(-static-libgcc -static-libstdc++)
 endif()
 
+# SpellChessLib contains UTF-8 move-notation literals. Apply the compiler
+# character-set options before FetchContent creates its targets so the fetched
+# spellchess target is compiled with the same settings.
+if(MSVC)
+    add_compile_options(/utf-8)
+elseif(MINGW OR CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    add_compile_options(-finput-charset=UTF-8 -fexec-charset=UTF-8)
+endif()
+
 set ( src_files 
     "src/App.cpp"
     "src/EmptyBoardWidget.cpp"

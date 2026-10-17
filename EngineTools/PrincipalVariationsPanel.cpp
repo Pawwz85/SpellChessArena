@@ -116,7 +116,7 @@ void VariationLineWidget::evalChanged(UCILoader::UciScore score, const SpellChes
 };
 
 void VariationLineWidget::variationChanged(const std::string & variation) {
-    variationLine->setText(QString::fromStdString(variation));
+    variationLine->setText(QString::fromUtf8(variation.data(), static_cast<qsizetype>(variation.size())));
     variationLine->setCursorPosition(0);
 }
 
