@@ -61,10 +61,21 @@ jobs:
           $version = $env:RELEASE_TAG -replace '^v', ''
           cmake -S . -B build -G "Visual Studio 17 2022" -A x64 `
             "-DCPACK_PACKAGE_VERSION=$($version)" `
-            -DCMAKE_PREFIX_PATH="$env:QT_ROOT_DIR"
+            -DCMAKE_PREFIX_PATH="$env:QT_ROOT_DIR" `
+            -DCMAKE_BUILD_TYPE=Release `
+            -DCMAKE_CONFIGURATION_TYPES=Release
 
       - name: Build
         run: cmake --build build --config Release --parallel
+
+      - name: Verify Release executable
+        shell: pwsh
+        run: |
+          $releaseExecutable = Join-Path $PWD "build\Release\SpellChessArena.exe"
+          if (-not (Test-Path -LiteralPath $releaseExecutable)) {
+            throw "Release executable was not produced: $releaseExecutable"
+          }
+          Write-Host "Packaging Release executable: $releaseExecutable"
 
       - name: Create CPack packages
         working-directory: build
