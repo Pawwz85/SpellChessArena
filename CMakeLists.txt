@@ -118,6 +118,18 @@ install(TARGETS SpellChessArena
 
 install(SCRIPT ${deploy_script})
 
+if(WIN32 AND MSVC AND DEFINED ENV{VCToolsRedistDir})
+    file(TO_CMAKE_PATH "$ENV{VCToolsRedistDir}" _msvc_redist_dir)
+    cmake_path(NORMAL_PATH _msvc_redist_dir)
+    file(GLOB _msvc_runtime_dlls
+        "${_msvc_redist_dir}/x64/Microsoft.VC*.CRT/*.dll")
+    if(_msvc_runtime_dlls)
+        install(FILES ${_msvc_runtime_dlls} DESTINATION .)
+    else()
+        message(WARNING "No x64 MSVC runtime DLLs found under VCToolsRedistDir")
+    endif()
+endif()
+
 # Qt's deployment script may place runtime DLLs in bin/ instead of beside the
 # application, so move the generated directory contents to the package root.
 if(WIN32)

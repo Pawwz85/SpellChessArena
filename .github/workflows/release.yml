@@ -92,6 +92,19 @@ jobs:
           if (-not (Get-ChildItem -Filter *.msi -File)) {
             throw "CPack WIX completed without producing an MSI"
           }
+          $requiredRuntime = @(
+            "MSVCP140.dll",
+            "MSVCP140_1.dll",
+            "VCRUNTIME140.dll",
+            "VCRUNTIME140_1.dll"
+          )
+          $stagedFiles = Get-ChildItem -Path _CPack_Packages\win64\WIX -Recurse -File
+          $missingRuntime = $requiredRuntime | Where-Object {
+            -not ($stagedFiles | Where-Object Name -ieq $_)
+          }
+          if ($missingRuntime) {
+            throw "MSVC runtime DLLs missing from MSI payload: $($missingRuntime -join ', ')"
+          }
 
       - name: Show WiX log
         if: steps.cpack.outcome == 'failure'
