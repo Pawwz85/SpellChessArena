@@ -88,6 +88,7 @@ set_target_properties( SpellChessArena PROPERTIES
 
 
 if(WIN32)
+    set(QT_DEPLOY_PLUGINS_DIR "plugins")
     qt_generate_deploy_app_script(
         TARGET SpellChessArena
         OUTPUT_SCRIPT deploy_script
@@ -136,9 +137,17 @@ if(WIN32)
     install(CODE [[
         set(_runtime_bin "${CMAKE_INSTALL_PREFIX}/bin")
         if(IS_DIRECTORY "${_runtime_bin}")
-            file(COPY "${_runtime_bin}/" DESTINATION "${CMAKE_INSTALL_PREFIX}")
+            file(GLOB _runtime_files LIST_DIRECTORIES false "${_runtime_bin}/*")
+            if(_runtime_files)
+                file(COPY ${_runtime_files} DESTINATION "${CMAKE_INSTALL_PREFIX}")
+            endif()
             file(REMOVE_RECURSE "${_runtime_bin}")
         endif()
+
+        file(WRITE "${CMAKE_INSTALL_PREFIX}/qt.conf"
+            "[Paths]\n"
+            "Prefix=.\n"
+            "Plugins=plugins\n")
     ]])
 endif()
 
