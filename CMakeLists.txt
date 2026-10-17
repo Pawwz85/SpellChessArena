@@ -86,12 +86,6 @@ set_target_properties( SpellChessArena PROPERTIES
     WIN32_EXECUTABLE ON
 )
 
-# The application executable is installed at the package root, so Qt runtime
-# libraries must be deployed there rather than under a separate bin directory.
-set(CMAKE_INSTALL_BINDIR ".")
-set(CMAKE_INSTALL_LIBDIR ".")
-set(QT_DEPLOY_BIN_DIR ".")
-set(QT_DEPLOY_LIB_DIR ".")
 
 if(WIN32)
     qt_generate_deploy_app_script(
@@ -108,11 +102,33 @@ else()
     )
 endif()
 
+
+# SpellChessLib contains UTF-8 move-notation literals. Apply the compiler
+# character-set options before FetchContent creates its targets so the fetched
+# spellchess target is compiled with the same settings.
+if(MSVC)
+    add_compile_options(/utf-8)
+elseif(MINGW OR CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    add_compile_options(-finput-charset=UTF-8 -fexec-charset=UTF-8)
+endif()
+
 install(TARGETS SpellChessArena
     RUNTIME DESTINATION .
 )
 
 install(SCRIPT ${deploy_script})
+
+# Qt's deployment script may place runtime DLLs in bin/ instead of beside the
+# application, so move the generated directory contents to the package root.
+if(WIN32)
+    install(CODE [[
+        set(_runtime_bin "${CMAKE_INSTALL_PREFIX}/bin")
+        if(IS_DIRECTORY "${_runtime_bin}")
+            file(COPY "${_runtime_bin}/" DESTINATION "${CMAKE_INSTALL_PREFIX}")
+            file(REMOVE_RECURSE "${_runtime_bin}")
+        endif()
+    ]])
+endif()
 
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/assets/"
     DESTINATION assets
