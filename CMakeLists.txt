@@ -27,6 +27,7 @@ set ( src_files
     "src/EngineRepository.cpp"
     "src/Form.cpp"
     "src/GameRunnerConfigurationDialog.cpp"
+    "src/GameStatisticsDialog.cpp"
     "src/LiveAnalisis.cpp"
     "src/LiveAnalisisEngineDialog.cpp"
     "src/main.cpp"

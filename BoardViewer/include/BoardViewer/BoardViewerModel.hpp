@@ -5,6 +5,7 @@
 #include <mutex>
 #include <cstdint>
 #include <string>
+#include <optional>
 
 #include <SpellChess/Board.h>
 #include <SpellChess/SpellChessDocument.h>
@@ -33,6 +34,11 @@ namespace BoardViewer {
         std::recursive_mutex mut;
         std::shared_ptr<SpellChessLib::SpellChessDocument> document;
         SpellChessLib::SpellChessDocument::Handle currentPosition;
+        mutable std::mutex analysisStatisticsMutex;
+        std::optional<SpellChessLib::GameStatistics> analysisStatistics;
+
+        void clearAnalysisStatistics();
+        void setAnalysisStatistics(SpellChessLib::GameStatistics statistics);
         
         SpellChessLib::TimerPairState timers;
 
@@ -72,6 +78,7 @@ namespace BoardViewer {
         virtual QString getBlackPlayerName() const { return QStringLiteral("Black"); }
         virtual bool canUserAnalizeDocumentNow() const;
         virtual void analyzeDocument(std::shared_ptr<SpellChessLib::DocumentAnnotator> annotator);
+        std::optional<SpellChessLib::GameStatistics> getAnalysisStatistics() const;
 
         signals:
         void changed(const Model & model);

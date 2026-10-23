@@ -157,17 +157,36 @@ BoardViewer::Model::canUserAnalizeDocumentNow() const {
 }
 
 void
+BoardViewer::Model::clearAnalysisStatistics() {
+    std::lock_guard<std::mutex> lock(analysisStatisticsMutex);
+    analysisStatistics.reset();
+}
+
+void
+BoardViewer::Model::setAnalysisStatistics(SpellChessLib::GameStatistics statistics) {
+    std::lock_guard<std::mutex> lock(analysisStatisticsMutex);
+    analysisStatistics = std::move(statistics);
+}
+
+void
 BoardViewer::Model::analyzeDocument(std::shared_ptr<SpellChessLib::DocumentAnnotator> annotator) {
 
     assert(canUserAnalizeDocumentNow());
+    clearAnalysisStatistics();
     
     auto doc = this->document;
     std::thread analysisThread([this, doc, annotator](){
-        (*annotator)(doc);
+        setAnalysisStatistics((*annotator)(doc));
         this->analisisCompleted();
     });
 
     analysisThread.detach();
+}
+
+std::optional<SpellChessLib::GameStatistics>
+BoardViewer::Model::getAnalysisStatistics() const {
+    std::lock_guard<std::mutex> lock(analysisStatisticsMutex);
+    return analysisStatistics;
 }
 
 #include <moc_BoardViewerModel.cpp>

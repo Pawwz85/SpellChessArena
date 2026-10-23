@@ -6,6 +6,7 @@
 #include <EngineRepository.hpp>
 #include <PastePGN4Dialog.hpp>
 #include <PasteFENDialog.hpp>
+#include <GameStatisticsDialog.hpp>
 
 #include <BoardViewer/GameViewerModel.hpp>
 #include <BoardViewer/BoardViewerWidget.hpp>
@@ -59,6 +60,19 @@ void App::analizeDocument(BoardViewer::Model * model, const EngineAnalisysConfig
         annotator->setFinishCallback([pb](){
             QMetaObject::invokeMethod(pb, &QProgressDialog::close, Qt::QueuedConnection);
         });
+
+        connect(model, &BoardViewer::Model::analisisCompleted, this,
+                [this, model]() {
+                    const auto statistics = model->getAnalysisStatistics();
+                    if (!statistics.has_value())
+                        return;
+
+                    GameStatisticsDialog dialog(statistics.value(),
+                                                model->getWhitePlayerName(),
+                                                model->getBlackPlayerName(),
+                                                mainWindow);
+                    dialog.exec();
+                }, static_cast<Qt::ConnectionType>(Qt::QueuedConnection | Qt::SingleShotConnection));
 
         model->analyzeDocument(annotator);
     } catch (const std::exception & e) {
