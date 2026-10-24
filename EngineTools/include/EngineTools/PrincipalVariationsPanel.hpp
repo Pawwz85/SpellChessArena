@@ -1,6 +1,8 @@
 #pragma once
 
 #include <cstddef>
+#include <cstdint>
+#include <optional>
 #include <string>
 #include <vector>
 #include <memory>
@@ -23,19 +25,21 @@ namespace UCILoader {
 class VariationLineWidget : public QWidget {
     Q_OBJECT
     QLabel * evaluationLabel;
-    QLineEdit * variationLine;
+    QLabel * variationLine;
     QColor evaluationColor;
+    std::string currentVariation;
+    std::optional<int32_t> currentDepth;
     
     private slots:
     void evalChanged(UCILoader::UciScore score, const SpellChessLib::GameState & context);
-    void variationChanged(const std::string & variation);
+    void variationChanged(const std::string & variation, const std::optional<int32_t> & depth);
 
     public:
     VariationLineWidget(QWidget * parent = nullptr);
 
     signals:
     void setEval(UCILoader::UciScore score, const SpellChessLib::GameState & context);
-    void setVariation(const std::string & variation);
+    void setVariation(const std::string & variation, const std::optional<int32_t> & depth);
 };
 
 class PrincipalVariationPanel : public QWidget, public EngineTools::EngineTool {

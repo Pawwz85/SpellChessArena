@@ -5,7 +5,6 @@
 #include <QPointer>
 #include <QFrame>
 #include <QLabel>
-#include <QLineEdit>
 #include <QString>
 #include <SpellChess/MoveNotation.h>
 #include <SpellChess/Board.h>
@@ -26,7 +25,7 @@ const QString evaluationLabelStylesheet = QString() +
 const QString evalLineStyleSheet = QString()+
                                  "background-color: #1e1e1e;" +
                                  "border-radius: 8px;" + 
-                                 "padding: 6px;" +
+                                 "padding: 3px 6px;" +
                                  "font-size: 14pt;" +
                                  "color: #e0e0e0;" +
                                  "min-height: 0px;";
@@ -87,8 +86,11 @@ VariationLineWidget::VariationLineWidget(QWidget * parent) : QWidget(parent) {
     evaluationLabel->setMinimumWidth(50);
     evaluationLabel->setMinimumHeight(40);
 
-    variationLine = new QLineEdit(this);
-    variationLine->setReadOnly(true);
+    variationLine = new QLabel(this);
+    variationLine->setTextFormat(Qt::RichText);
+    variationLine->setTextInteractionFlags(Qt::TextSelectableByMouse);
+    variationLine->setWordWrap(false);
+    variationLine->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
     
     // Style the move notation line with rounded corners and subtle shadow effect  
     variationLine->setStyleSheet(evalLineStyleSheet);
@@ -102,6 +104,7 @@ VariationLineWidget::VariationLineWidget(QWidget * parent) : QWidget(parent) {
     connect(this, &VariationLineWidget::setVariation, this, &VariationLineWidget::variationChanged, Qt::QueuedConnection);
 
     setEval(UCILoader::UciScore::fromCentipawns(0), SpellChessLib::GameState());
+    setVariation(std::string(), std::nullopt);
     setMinimumHeight(50);
 };
 
@@ -115,9 +118,19 @@ void VariationLineWidget::evalChanged(UCILoader::UciScore score, const SpellChes
     evaluationLabel->setStyleSheet(evaluationLabelStylesheet.arg(evalBackground.name()).arg(evalForehround.name()));
 };
 
-void VariationLineWidget::variationChanged(const std::string & variation) {
-    variationLine->setText(QString::fromUtf8(variation.data(), static_cast<qsizetype>(variation.size())));
-    variationLine->setCursorPosition(0);
+void VariationLineWidget::variationChanged(const std::string & variation, const std::optional<int32_t> & depth) {
+    currentVariation = variation;
+    currentDepth = depth;
+
+    const QString escapedVariation = QString::fromUtf8(
+        currentVariation.data(), static_cast<qsizetype>(currentVariation.size())).toHtmlEscaped();
+    QString renderedVariation = escapedVariation;
+    if (currentDepth.has_value()) {
+        renderedVariation = QStringLiteral("<span style=\"color: #8a8a8a; font-size: 10pt;\">depth=%1&nbsp;&nbsp;</span>%2")
+            .arg(*currentDepth)
+            .arg(escapedVariation);
+    }
+    variationLine->setText(renderedVariation);
 }
 
 void PrincipalVariationPanel::disconnectEngine() {
@@ -133,30 +146,40 @@ void PrincipalVariationPanel::connectEngine(const EngineServiceEntry & engineEnt
                 return;
             auto *panel = self.data();
             int pvIndex = 0;
+            std::vector<std::optional<int32_t>> depths(panel->numVariations);
+            std::vector<std::string> variations(panel->numVariations);
+            std::vector<bool> pvUpdated(panel->numVariations, false);
 
-            // scan for the MultiPV index in the infos
-            for (const auto & info: infos){
+            // UCI does not require a fixed order for info fields. Resolve the
+            // MultiPV index before interpreting depth, score, or PV fields.
+            for (const auto & info: infos) {
                 if (info.getType() == UCILoader::InfoType::MultiPv) {
-                    auto multiPv = info.getIntegerValue() - 1;
-                    if (pvIndex >= 0 && pvIndex < static_cast<int>(self->numVariations)) 
+                    const auto multiPv = info.getIntegerValue() - 1;
+                    if (multiPv >= 0 && multiPv < static_cast<int>(panel->numVariations))
                         pvIndex = multiPv;
                 }
             }
 
             for (const auto & info: infos) {
-                if (info.getType() == UCILoader::InfoType::Pv) {
+                if (info.getType() == UCILoader::InfoType::Depth) {
+                    if (pvIndex >= 0 && pvIndex < static_cast<int>(panel->numVariations))
+                        depths[pvIndex] = info.getIntegerValue();
+                } else if (info.getType() == UCILoader::InfoType::Pv) {
                     try {
-                        std::string variationLine = panel->formatVariationLine(info.getMoveArray());
-                        panel->variationLines[pvIndex].setVariation(variationLine);
-                    } catch(SpellChessLib::IllegalMoveException e){
-                        // If the engine sends an illegal move, we will just ignore it and not update the variation line.
-                    };
-                    
-                    
+                        variations[pvIndex] = panel->formatVariationLine(info.getMoveArray());
+                        pvUpdated[pvIndex] = true;
+                    } catch (const SpellChessLib::IllegalMoveException &) {
+                        // If the engine sends an illegal move, ignore the update.
+                    }
                 } else if (info.getType() == UCILoader::InfoType::Score) {
-                        panel->variationLines[pvIndex].setEval(info.getAsScore(), panel->context);
+                    panel->variationLines[pvIndex].setEval(info.getAsScore(), panel->context);
                 }
-            };
+            }
+
+            for (size_t i = 0; i < panel->numVariations; ++i) {
+                if (pvUpdated[i])
+                    panel->variationLines[i].setVariation(variations[i], depths[i]);
+            }
         });
 
     searchRequestHandler = engineEntry.engine->addSearchRequestHandler([self](const UCILoader::SearchRequest<SpellChessLib::SpellChessMove> & request) {
