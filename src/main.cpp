@@ -43,10 +43,6 @@ void warmUpTextRendering() {
     painter.drawText(image.rect(), Qt::AlignLeft | Qt::AlignVCenter, samples);
 }
 
-void tryBootingLiveAnalisis() {
-    
-};
-
 void signalHandler(int code) {
     UCILoader::ProcessWrapper::killAll();
     exit(code);
