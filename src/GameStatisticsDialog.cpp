@@ -15,7 +15,7 @@ QString accuracy(const SpellChessLib::PlayerStatistics & statistics) {
         return QObject::tr("N/A");
 
     const double value = std::clamp(
-        100.0 * (1.0 - statistics.totalLoss / static_cast<double>(statistics.totalMoves)),
+        100.0 * (static_cast<double>(statistics.totalMoves) / statistics.totalAccuracyReciprocals),
         0.0, 100.0);
     return QObject::tr("%1%").arg(value, 0, 'f', 2);
 }

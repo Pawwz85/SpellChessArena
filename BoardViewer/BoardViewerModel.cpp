@@ -20,6 +20,10 @@ BoardViewer::Model::Model(QObject * parent) : QObject(parent){
     connect(this, &Model::analisisCompleted, this, &Model::onAnalisisCompleted, Qt::QueuedConnection);
 };
 
+BoardViewer::Model::~Model() {
+    waitForAnalysis();
+}
+
 void
 BoardViewer::Model::onAnalisisCompleted() {
     if (document->clearDirtyFlag())
@@ -169,18 +173,23 @@ BoardViewer::Model::setAnalysisStatistics(SpellChessLib::GameStatistics statisti
 }
 
 void
+BoardViewer::Model::waitForAnalysis() {
+    if (analysisThread.joinable())
+        analysisThread.join();
+}
+
+void
 BoardViewer::Model::analyzeDocument(std::shared_ptr<SpellChessLib::DocumentAnnotator> annotator) {
 
     assert(canUserAnalizeDocumentNow());
+    waitForAnalysis();
     clearAnalysisStatistics();
     
     auto doc = this->document;
-    std::thread analysisThread([this, doc, annotator](){
+    analysisThread = std::thread([this, doc, annotator](){
         setAnalysisStatistics((*annotator)(doc));
         this->analisisCompleted();
     });
-
-    analysisThread.detach();
 }
 
 std::optional<SpellChessLib::GameStatistics>

@@ -26,6 +26,7 @@
 
 #include <SpellChess/PGN4Parser.h>
 
+#include <atomic>
 #include <optional>
 
 void App::analizeDocument(BoardViewer::Model * model, const EngineAnalisysConfig & config) {
@@ -52,9 +53,12 @@ void App::analizeDocument(BoardViewer::Model * model, const EngineAnalisysConfig
 
         auto annotator = std::make_shared<SpellChessLib::DocumentAnnotator>(analizer, moveClassifier, config.recursive);
 
-        annotator->setPositionAnalizedCallback([pb](){
-            int x = pb->value();
-            QMetaObject::invokeMethod(pb, &QProgressDialog::setValue, Qt::QueuedConnection, x + 1);
+        auto progressValue = std::make_shared<std::atomic<int>>(0);
+        annotator->setPositionAnalizedCallback([pb, progressValue](){
+            const int value = progressValue->fetch_add(1, std::memory_order_relaxed) + 1;
+            QMetaObject::invokeMethod(pb, [pb, value](){
+                pb->setValue(value);
+            }, Qt::QueuedConnection);
         });
 
         annotator->setFinishCallback([pb](){

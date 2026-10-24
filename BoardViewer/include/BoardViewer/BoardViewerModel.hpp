@@ -6,6 +6,7 @@
 #include <cstdint>
 #include <string>
 #include <optional>
+#include <thread>
 
 #include <SpellChess/Board.h>
 #include <SpellChess/SpellChessDocument.h>
@@ -36,9 +37,11 @@ namespace BoardViewer {
         SpellChessLib::SpellChessDocument::Handle currentPosition;
         mutable std::mutex analysisStatisticsMutex;
         std::optional<SpellChessLib::GameStatistics> analysisStatistics;
+        std::thread analysisThread;
 
         void clearAnalysisStatistics();
         void setAnalysisStatistics(SpellChessLib::GameStatistics statistics);
+        void waitForAnalysis();
         
         SpellChessLib::TimerPairState timers;
 
@@ -48,6 +51,7 @@ namespace BoardViewer {
         public:
 
         Model(QObject * parent = nullptr);
+        ~Model() override;
         
         // sets new position in the current document to view
         virtual void setCurrentPosition(SpellChessLib::SpellChessDocument::Handle newPosition);

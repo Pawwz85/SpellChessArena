@@ -41,7 +41,7 @@ include(FetchContent)
 
 FetchContent_Declare(
     SpellChessLib
-    URL https://github.com/Pawwz85/SpellChessLib/archive/refs/tags/v1.1.0.tar.gz
+    URL https://github.com/Pawwz85/SpellChessLib/archive/refs/heads/main.zip
 )
 
 FetchContent_MakeAvailable(SpellChessLib)
