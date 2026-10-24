@@ -6,6 +6,7 @@
 #include <string>
 
 #include <SpellChess/Board.h> // for SpellChessMove
+#include <SpellChess/Arbiter.h> // for arbite
 
 class QObject;
 
@@ -27,7 +28,10 @@ BoardViewer::DocumentViewerModel::getDocument() const {
 
 bool 
 BoardViewer::DocumentViewerModel::canUserSubmitMove() {
-    return true;
+    auto currentState = document->getGameState(currentPosition);
+    auto movesSinceRoot = document->getMovesSinceRoot(currentPosition);
+    SpellChessLib::ArbiterVerdict verdict = SpellChessLib::arbite(currentState, movesSinceRoot);
+    return verdict == SpellChessLib::ArbiterVerdict::None;
 }
 
 QString BoardViewer::DocumentViewerModel::getWhitePlayerName() const {
