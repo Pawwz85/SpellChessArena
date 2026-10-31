@@ -28,9 +28,9 @@ BoardViewer::DocumentViewerModel::getDocument() const {
 
 bool 
 BoardViewer::DocumentViewerModel::canUserSubmitMove() {
-    auto currentState = document->getGameState(currentPosition);
+    auto rootState = document->getGameState(document->getRoot());
     auto movesSinceRoot = document->getMovesSinceRoot(currentPosition);
-    SpellChessLib::ArbiterVerdict verdict = SpellChessLib::arbite(currentState, movesSinceRoot);
+    SpellChessLib::ArbiterVerdict verdict = SpellChessLib::arbite(rootState, movesSinceRoot);
     return verdict == SpellChessLib::ArbiterVerdict::None;
 }
 
