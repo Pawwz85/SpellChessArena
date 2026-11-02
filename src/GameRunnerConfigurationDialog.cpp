@@ -226,13 +226,15 @@ void OpeningSuiteWidget::post(){
     SpellChessLib::SpellChessFenValidator spellValidator;
     SpellChessLib::StandardChessFenValidator standardValidator;
 
-    if (!spellValidator.isValidFen(data.fen.toStdString().c_str()) &&
-        !standardValidator.isValidFen(data.fen.toStdString().c_str())) {
+    std::string fen = data.fen.toStdString();
+
+    if (!spellValidator.isValidFen(fen.c_str()) &&
+        !standardValidator.isValidFen(fen.c_str())) {
             raiseError(tr("Invalid FEN String"));
             return;
     };
 
-    builder->getGameRunnerConfigBuilder()->withPosition(data.fen.toStdString()); 
+    builder->getGameRunnerConfigBuilder()->withPosition(fen); 
 
     if (data.grimoireFile.isEmpty()) {
         builder->withOpeningBook(nullptr);
@@ -253,7 +255,7 @@ OpeningSuiteWidget::OpeningSuiteWidget(BoardViewer::OpenSessionRequestBuilder * 
     QVBoxLayout* layout = new QVBoxLayout(this);
     QHBoxLayout* grimoirePathBox;
 
-    data.fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1 - - F50/f50/J20/j20";
+    data.fen = QString("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1 - - F50/f50/J20/j20");
     data.grimoireFile = "";
 
     startingFen = new QLineEdit(this);

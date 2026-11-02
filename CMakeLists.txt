@@ -15,7 +15,7 @@ option (ENABLE_IWYU "Enable include-what-you-use" OFF)
 # Keep the compiler runtime self-contained in distributed Windows builds. Qt is
 # still deployed beside the executable by Qt's deployment script below.
 if(MSVC)
-    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>" CACHE STRING "MSVC runtime library" FORCE)
+    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:DebugDLL>" CACHE STRING "MSVC runtime library" FORCE)
 elseif(MINGW)
     add_link_options(-static-libgcc -static-libstdc++)
 endif()
