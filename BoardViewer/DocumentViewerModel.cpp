@@ -7,6 +7,8 @@
 
 #include <SpellChess/Board.h> // for SpellChessMove
 #include <SpellChess/Arbiter.h> // for arbite
+#include <SpellChess/SpellChessDocument.h> // for SpellChessDocument
+#include <SpellChess/MoveGen.h>
 
 class QObject;
 
@@ -46,6 +48,13 @@ QString BoardViewer::DocumentViewerModel::getBlackPlayerName() const {
 
 void
 BoardViewer::DocumentViewerModel::handleMakeMove(SpellChessLib::SpellChessMove move) {
+    SpellChessLib::GameState currentState = document->getGameState(currentPosition);
+
+    SpellChessLib::MoveGenerator gen(currentState);
+
+    if (!gen.isMoveLegal(move))
+        return; // illegal move, ignore
+
     currentPosition = document->makeMove(currentPosition, move);
     documentChanged(*document);
 };
