@@ -204,6 +204,12 @@ void PrincipalVariationPanel::connectEngine(const EngineServiceEntry & engineEnt
             panel->context.makeMove(move);
         }
 
+        for (size_t i = 0; i < panel->numVariations; ++i) {
+            panel->variationLines[i].setVariation("", 0);    
+            panel->variationLines[i].setEval(UCILoader::UciScore::fromCentipawns(0), panel->context);    
+        }
+
+
     });
 
 }

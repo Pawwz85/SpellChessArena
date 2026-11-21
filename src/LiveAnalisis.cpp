@@ -119,6 +119,14 @@ LiveAnalisisService::openEngine(const std::vector<std::string> & args, const std
     EngineServiceEntry engineEntry;
     try {
         engineEntry = engineService.openEngine(args, workingDirectory);
+        engineEntry.engine->sync();
+
+        if (engineEntry.engine->options.contains("MultiPv"))
+            engineEntry.engine->options["MultiPv"] = 3;
+
+        if (engineEntry.engine->options.contains("multipv"))
+            engineEntry.engine->options["multipv"] = 3;
+
     } catch (const std::exception &) {
         return;
     }
