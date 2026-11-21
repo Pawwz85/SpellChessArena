@@ -405,6 +405,7 @@ void BoardViewer::BoardViewerWidget::NoFocus::onPieceClicked(SpellChessLib::Squa
     bool canMove = widget->model->canUserSubmitMove();
 
     canMove &= (piece.owner == widget->model->getCurrentState().getSideToMove());
+    canMove &= ! widget->board->boardGridModel.getPropertyValue(pieceSquare, Board::Frozen);
 
     if (canMove) {
         widget->moveBuilder->setFromSquare(pieceSquare);
