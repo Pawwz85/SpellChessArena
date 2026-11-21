@@ -20,6 +20,8 @@
         Selected,
         Interactable,
         Higlighted,
+        FrozenPreview,
+        FreezePreviewTrigger,
         HasMoveDot,
         HasSnowflake,
         HasRing,

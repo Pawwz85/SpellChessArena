@@ -1,5 +1,6 @@
 #include <BoardLinter.hpp>
 #include <BoardGrid/BoardGridModel.h>
+#include <BoardGrid/Areas.h>
 #include <SpellChess/MoveGen.h>
 #include <vector>
 #include <cstddef>
@@ -87,21 +88,6 @@ uint64_t BoardViewer::Internal::getJumpableSquares(const LinterInput & input) {
     return result;
 };
 
-uint64_t freezeArea(SpellChessLib::SquareIndex freezeCenter) {
-
-    if (freezeCenter == SpellChessLib::NoSquare)   
-        return 0ull;
-
-    uint64_t result = 1ull << freezeCenter;
-    if (freezeCenter % 8 != 0)
-        result |= result >> 1;
-    if (freezeCenter % 8 != 7)
-        result |= result << 1;
-
-    result |= (result << 8) | (result >> 8);
-    return result;
-};
-
 uint64_t  BoardViewer::Internal::getFrozenSquares(const LinterInput & input) {
     uint64_t result = 0ull;
     result |= freezeArea(input.state.getFreezeSquare());
@@ -177,12 +163,23 @@ uint64_t BoardViewer::Internal::getSquaresWithRings(const LinterInput & input) {
     uint64_t occupied = Internal::getOccupiedSquares(input);
     uint64_t selected =  input.selectedSquare != SpellChessLib::NoSquare ? (1ull << input.selectedSquare) : 0ull;
 
+    uint64_t freezePreviewTrigger = input.selectedSpell.value_or(SpellChessLib::JumpSpell) == SpellChessLib::FreezeSpell ?
+                                    interactable : 0ull;
     uint64_t highlighted = model.getPropertyBitmask(Board::Higlighted);
+
+    uint64_t frozen = Internal::getFrozenSquares(input);
+
+    // Do not suggest to user they could interact with frozen pieces
+    if(!input.selectedSpell.has_value())
+        interactable &= ~frozen;
+
     model.startEdit()
-    .setPropertyBitmask(Board::Frozen,          Internal::getFrozenSquares(input))
+    .setPropertyBitmask(Board::Frozen,          frozen)
     .setPropertyBitmask(Board::Jumpable,        Internal::getJumpableSquares(input))
     .setPropertyBitmask(Board::Selected,        selected)
     .setPropertyBitmask(Board::Interactable,    interactable)
+    .setPropertyBitmask(Board::FrozenPreview, 0ull)
+    .setPropertyBitmask(Board::FreezePreviewTrigger, freezePreviewTrigger)
     .setPropertyBitmask(Board::HasMoveDot,      Internal::getValidTargetSquares(input))
     .setPropertyBitmask(Board::HasSnowflake,    Internal::getSquaresWithSnowflakes(input))
     .setPropertyBitmask(Board::HasRing,         Internal::getSquaresWithRings(input))

@@ -22,6 +22,7 @@ namespace Board {
         protected:
         virtual void drawPieces(QPainter & painter) {}; 
         virtual void drawExtras(QPainter & painter) {};
+        virtual void onSquareHovered(unsigned int squareIndex);
 
         QRect getSquareBoundingRect(int col, int row);
 

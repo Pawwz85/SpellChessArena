@@ -16,6 +16,7 @@
 #include <utility>
 #include <algorithm>
 #include <PromotionContextMenuOverlay.hpp>
+#include <Areas.h>
 
 class QPixmap;
 using namespace Board;
@@ -151,7 +152,8 @@ void BoardGridWidget::paintEvent(QPaintEvent * event) {
             painter.drawEllipse(QPoint(x + step_x / 2, y + step_y/2), step_x/8, step_y/8);
         }
 
-        if (boardGridModel.getPropertyValue(squareIndex, Frozen)){
+        if (boardGridModel.getPropertyValue(squareIndex, Frozen) | 
+            boardGridModel.getPropertyValue(squareIndex, FrozenPreview)){
             painter.setBrush(QColor::fromRgba(boardGridModel.getConfig().freezeAreaColour));
             painter.drawRect(x, y, step_x, step_y);
         }
@@ -171,6 +173,28 @@ void BoardGridWidget::paintEvent(QPaintEvent * event) {
 void BoardGridWidget::resetHiglight() { 
     boardGridModel.startEdit().setPropertyBitmask(Board::Higlighted, 0ull).commit();
 };
+
+void BoardGridWidget::onSquareHovered(unsigned int hoveredSquareIndex) {
+    
+    uint64_t selected = boardGridModel.getPropertyBitmask(Board::Selected); 
+    uint64_t higlight = selected | (1ull << hoveredSquareIndex);
+
+    uint64_t freezePreview = 0ull;
+    
+    if (!boardGridModel.getPropertyValue(hoveredSquareIndex, Board::Interactable)) {
+        higlight = 0ull;
+    } 
+
+    if (boardGridModel.getPropertyBitmask(Board::FreezePreviewTrigger) & (1ull << hoveredSquareIndex)) {
+        freezePreview = freezeArea(hoveredSquareIndex);
+    }
+
+    boardGridModel.startEdit()
+        .setPropertyBitmask(Board::Higlighted, higlight)
+        .setPropertyBitmask(Board::FrozenPreview, freezePreview)
+        .commit();
+}
+
 
 QRect BoardGridWidget::getSquareBoundingRect(int col, int row) {
     int x = width() * col / 8;
@@ -193,13 +217,7 @@ void BoardGridWidget::mouseMoveEvent(QMouseEvent* event) {
         return;
     }
 
-    if (!boardGridModel.getPropertyValue(hoveredSquareIndex, Board::Interactable)) {
-        resetHiglight();
-        return;
-    }    
-    uint64_t selected = boardGridModel.getPropertyBitmask(Board::Selected); 
-    uint64_t higlight = selected | (1ull << hoveredSquareIndex);
-    boardGridModel.startEdit().setPropertyBitmask(Board::Higlighted, higlight).commit();
+    onSquareHovered(hoveredSquareIndex);
 };
 
 
