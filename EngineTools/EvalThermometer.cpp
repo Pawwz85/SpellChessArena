@@ -98,16 +98,27 @@ void EvalThermometer::connectEngine(const EngineServiceEntry & engineEntry) {
         if (self.isNull())
             return;
 
+        UCILoader::UciScore score = UCILoader::UciScore::fromCentipawns(0);
+        int multiPv = 1;
+
         for (const auto & info : infos) {
+
+            if (info.getType() == UCILoader::InfoType::MultiPv) {
+                multiPv = info.getIntegerValue();
+                continue;
+            }
+
             if (info.getType() != UCILoader::InfoType::Score)
                 continue;
 
-            const auto currentScore = info.getAsScore();
-            QMetaObject::invokeMethod(self.data(), [self, currentScore]() {
-                if (!self.isNull())
-                    self->setEvaluation(currentScore, self->context);
-            }, Qt::QueuedConnection);
+            score = info.getAsScore();
         }
+
+        if (multiPv == 1)
+            QMetaObject::invokeMethod(self.data(), [self, score]() {
+                if (!self.isNull())
+                    self->setEvaluation(score, self->context);
+            }, Qt::QueuedConnection);
     });
 }
 
